@@ -1,0 +1,11 @@
+package kz.snakex.scenes;
+
+import kz.snakelario.Constants;
+
+import org.andengine.entity.scene.Scene;
+
+public class Level1Scene extends Scene implements Constants {
+	private static final int NUMBER_OF_LAYERS = 3;
+	private int _mapWidth;
+	private int _mapHeight;
+}

@@ -1,0 +1,177 @@
+package kz.snakelario;
+
+import kz.snakelario.entities.Snake;
+import kz.snakelario.entities.SnakeDirection;
+
+import org.andengine.engine.camera.BoundCamera;
+import org.andengine.engine.camera.Camera;
+import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.options.EngineOptions;
+import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.Entity;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.SpriteBackground;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.util.FPSLogger;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.debug.Debug;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.extension.tmx.TMXLayer;
+import org.andengine.extension.tmx.TMXLoader;
+import org.andengine.extension.tmx.TMXLoader.ITMXTilePropertiesListener;
+import org.andengine.extension.tmx.TMXProperties;
+import org.andengine.extension.tmx.TMXTile;
+import org.andengine.extension.tmx.TMXTileProperty;
+import org.andengine.extension.tmx.TMXTiledMap;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+public class LevelActivity extends BaseGameActivity implements IOnSceneTouchListener, Constants {
+	private static final int CAMERA_WIDTH = 480;
+	private static final int CAMERA_HEIGHT = 800;
+	public static final float CAMERA_MAXIMUM_VELOCITY_X = 400f;
+	public static final float CAMERA_MAXIMUM_VELOCITY_Y = 400f;
+	public static final float CAMERA_ZOOM_FACTOR_CHANGE = 1f;
+	private static final int LAYER_TILE_MAP = 0;
+	private static final int LAYER_FOOD = 1;
+	private static final int LAYER_SNAKE = 2;
+	private static final int NUMBER_OF_LAYERS = 3;
+	private int _mapWidth;
+	private int _mapHeight;
+	
+	private GameState mState = GameState.NotStarted;
+	
+	private BoundCamera mCamera;
+	private Textures mTextures;
+	private Scene mScene;
+	private TMXTiledMap mTMXTiledMap;
+	private Snake mSnake;
+	
+	@Override
+	public EngineOptions onCreateEngineOptions() {
+		//this.mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 
+		//	CAMERA_MAXIMUM_VELOCITY_X, CAMERA_MAXIMUM_VELOCITY_Y, CAMERA_ZOOM_FACTOR_CHANGE);
+		this.mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+	    return new EngineOptions(true,
+	        ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(
+	            getScreenResolutionRatio()), this.mCamera);
+	}
+
+	@Override
+	public void onCreateResources(
+			OnCreateResourcesCallback pOnCreateResourcesCallback)
+			throws Exception {		
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		mTextures = new Textures(this, getEngine());
+		pOnCreateResourcesCallback.onCreateResourcesFinished();
+	}
+	
+	@Override
+	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
+			throws Exception {
+		//Ln.i("OnLoadScene");		
+	    this.mEngine.registerUpdateHandler(new FPSLogger());
+	    this.mScene = new Scene();
+	    for(int i = 0; i < NUMBER_OF_LAYERS; i++) {
+	    	this.mScene.attachChild(new Entity());
+	    }
+	    mScene.setOnSceneTouchListener(this);
+	    try {
+	    	final TMXLoader tmxLoader = new TMXLoader(getAssets(),
+    			mEngine.getTextureManager(),
+    			TextureOptions.BILINEAR_PREMULTIPLYALPHA, 
+    			getVertexBufferObjectManager(), new ITMXTilePropertiesListener() {
+					@Override
+					public void onTMXTileWithPropertiesCreated(
+							TMXTiledMap pTMXTiledMap, TMXLayer pTMXLayer,
+							TMXTile pTMXTile,
+							TMXProperties<TMXTileProperty> pTMXTileProperties) {
+					}	    		
+	    		});
+	    	
+	    	mTMXTiledMap = tmxLoader.loadFromAsset("levels/level0.tmx");
+	    } catch (Exception e) {
+	    	Debug.e(e);
+	    }
+	    
+	    final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
+	    //mScene.getChildByIndex(LAYER_TILE_MAP).attachChild(tmxLayer);
+	    
+	    _mapWidth = tmxLayer.getHeight();
+	    _mapHeight = tmxLayer.getWidth();
+	    mCamera.setBounds(0, 0, tmxLayer.getHeight(), tmxLayer.getWidth());
+	    mCamera.setBoundsEnabled(true);
+	    
+	    mSnake = new Snake(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, SnakeDirection.RIGHT, mTextures, getVertexBufferObjectManager());
+	    mSnake.setMap(_mapWidth, _mapHeight);
+	    mScene.getChildByIndex(LAYER_SNAKE).attachChild(mSnake);
+	    mSnake.grow();
+	    mSnake.grow();
+	    
+	    mSnake.move();
+	    //mSnake.grow();
+	    //mSnake.move();
+	    //mSnake.grow();
+	    //mSnake.move();
+	    //mSnake.setDirection(SnakeDirection.DOWN);
+	    //for (int i = 0; i < 15; i++)
+	    //	mSnake.move();
+	    //mSnake.setDirection(SnakeDirection.RIGHT);
+	    //for (int i = 0; i < 15; i++)
+	    //	mSnake.move();
+	    
+	    mCamera.setChaseEntity(mSnake.getHead());
+	    
+	    mScene.registerUpdateHandler(new TimerHandler(0.01f, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				if (mState == GameState.Running) {
+					mSnake.move();
+				}
+			}	    	
+	    }));	    
+	    pOnCreateSceneCallback.onCreateSceneFinished(this.mScene);
+	}
+
+	@Override
+	public void onPopulateScene(Scene pScene,
+			OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+		mState = GameState.Running;
+		pOnPopulateSceneCallback.onPopulateSceneFinished();
+	}
+	
+	private float getScreenResolutionRatio() {
+	    DisplayMetrics dm = new DisplayMetrics();
+	    getWindowManager().getDefaultDisplay().getMetrics(dm);
+	    return ((float) dm.widthPixels) / ((float) dm.heightPixels);
+	}
+
+	@Override
+	public boolean onSceneTouchEvent(Scene pScene, final TouchEvent pSceneTouchEvent) {
+		if (pSceneTouchEvent.isActionDown()) {
+            //addElement(te.getX(), te.getY(), scene);
+			this.runOnUiThread(new Runnable() {				
+				@Override
+				public void run() {
+					if (mSnake == null) return;
+					mSnake.handleSceneTouch(pSceneTouchEvent);
+					//Toast.makeText(LevelActivity.this, angle + "", Toast.LENGTH_SHORT).show();
+				}
+			});
+			
+            return true;
+        }
+        return false;
+	}
+}

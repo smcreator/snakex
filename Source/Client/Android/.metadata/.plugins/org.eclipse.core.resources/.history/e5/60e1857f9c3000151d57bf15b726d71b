@@ -1,0 +1,9 @@
+package kz.snakelario;
+
+public interface Constants {
+	public static final int CELLS_HORIZONTAL = 100;
+	public static final int CELLS_VERTICAL = 100;
+	
+	public static final int SNAKE_WIDTH = 15;
+	public static final int SNAKE_HEIGHT = SNAKE_WIDTH; 
+}

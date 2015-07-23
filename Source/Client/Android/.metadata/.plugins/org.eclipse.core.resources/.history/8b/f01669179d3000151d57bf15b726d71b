@@ -1,0 +1,62 @@
+package kz.snakex.scenes;
+
+import kz.snakelario.Constants;
+import kz.snakelario.entities.Snake;
+
+import org.andengine.entity.Entity;
+import org.andengine.entity.scene.Scene;
+import org.andengine.extension.tmx.TMXLayer;
+import org.andengine.extension.tmx.TMXLoader;
+import org.andengine.extension.tmx.TMXProperties;
+import org.andengine.extension.tmx.TMXTile;
+import org.andengine.extension.tmx.TMXTileProperty;
+import org.andengine.extension.tmx.TMXTiledMap;
+import org.andengine.extension.tmx.TMXLoader.ITMXTilePropertiesListener;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.util.debug.Debug;
+
+import android.content.res.AssetManager;
+
+public class Level1Scene extends Scene implements Constants {
+	private static final int NUMBER_OF_LAYERS = 3;
+	private int _mapWidth;
+	private int _mapHeight;
+	
+	private AssetManager _assets;
+	private TMXTiledMap mTMXTiledMap;
+	private Snake mSnake;
+	
+	public Level1Scene(AssetManager assets) {
+		super();
+		
+		_assets = assets;
+		
+		for(int i = 0; i < NUMBER_OF_LAYERS; i++) {
+	    	attachChild(new Entity());
+	    }
+		
+		try {
+	    	final TMXLoader tmxLoader = new TMXLoader(_assets(),
+    			mEngine.getTextureManager(),
+    			TextureOptions.BILINEAR_PREMULTIPLYALPHA, 
+    			getVertexBufferObjectManager(), new ITMXTilePropertiesListener() {
+					@Override
+					public void onTMXTileWithPropertiesCreated(
+							TMXTiledMap pTMXTiledMap, TMXLayer pTMXLayer,
+							TMXTile pTMXTile,
+							TMXProperties<TMXTileProperty> pTMXTileProperties) {
+					}	    		
+	    		});
+	    	
+	    	mTMXTiledMap = tmxLoader.loadFromAsset("levels/level0.tmx");
+	    } catch (Exception e) {
+	    	Debug.e(e);
+	    }
+	    
+	    final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
+	    //mScene.getChildByIndex(LAYER_TILE_MAP).attachChild(tmxLayer);
+	    
+	    _mapWidth = tmxLayer.getHeight();
+	    _mapHeight = tmxLayer.getWidth();
+	}
+}

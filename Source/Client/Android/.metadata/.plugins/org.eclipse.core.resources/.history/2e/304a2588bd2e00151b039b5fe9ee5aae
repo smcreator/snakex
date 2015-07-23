@@ -1,0 +1,41 @@
+package kz.snakelario;
+
+import org.andengine.engine.Engine;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.ui.activity.BaseGameActivity;
+
+import android.util.Log;
+
+public class Textures {
+	private BitmapTextureAtlas mTexture;
+	private ITextureRegion mBackgroundTextureRegion;
+	
+	private BitmapTextureAtlas mEntitiesTexture;
+	private ITextureRegion mSnakeBodyTextureRegion;
+	
+	public Textures(final BaseGameActivity activity, final Engine engine) {
+	    Log.i("Laser Logic", "onLoadResources");
+	    mTexture = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 512);
+	    mBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+	        mTexture, activity, "bg.png", 0, 0);
+	    
+	    mEntitiesTexture = new BitmapTextureAtlas(activity.getTextureManager(), 128, 128);
+	    mSnakeBodyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mEntitiesTexture, activity, 
+	    	"snake_body.png", 0, 0);
+	    mEntitiesTexture.load();
+	    
+	    mTexture.load();
+	  }
+	  
+	  public ITextureRegion getBackground(){
+	    return mBackgroundTextureRegion;
+	  }
+	  
+	  public ITextureRegion getSnakeBody() {
+		  return mSnakeBodyTextureRegion;
+	  }
+}

@@ -1,0 +1,122 @@
+package kz.snakelario.entities;
+
+import kz.snakelario.Constants;
+import kz.snakelario.Textures;
+
+import org.andengine.entity.Entity;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
+public class Snake extends Entity implements Constants {
+	private SnakeDirection _direction;
+	private SnakeDirection _lastDirection;
+	private int _x;
+	private int _y;
+	
+	private SnakeHead _head;
+	private SnakeBody _body;
+	private boolean _isGrow;
+	
+	private int _mapWidth;
+	private int _mapHeight;
+	
+	public SnakeHead getHead() {
+		return _head;
+	}
+	
+	public SnakeDirection getDirection() {
+		return _direction;
+	}	
+	
+	public boolean setDirection(final SnakeDirection pDirection) {
+		if(_lastDirection != SnakeDirection.opposite(pDirection)) {
+			_direction = pDirection;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void setMap(int width, int height) {
+		_mapWidth = width;
+		_mapHeight = height;
+	}
+	
+	public int getPositionX() {
+		return _x * SNAKE_WIDTH;
+	}
+	
+	public int getPositionY() {
+		return _y * SNAKE_HEIGHT;
+	}
+	
+	public Snake(int x, int y, SnakeDirection direction, Textures textures, 
+		final VertexBufferObjectManager pSpriteVertexBufferObject) {
+		super(0, 0);
+		
+		_x = x;
+		_y = y;
+		
+		_head = new SnakeHead(getPositionX(), getPositionY(), textures, pSpriteVertexBufferObject);
+		attachChild(_head);
+		setDirection(direction);
+		_body = new SnakeBody(textures, pSpriteVertexBufferObject);
+	}
+	
+	public void grow() {
+		_isGrow = true;
+	}
+	
+	public void move() {
+		_lastDirection = _direction;
+		int nextX = getNextX() * SNAKE_WIDTH;
+		int nextY = getNextY() * SNAKE_WIDTH;
+		
+		if (nextX < SNAKE_WIDTH * 2 || nextX >= _mapWidth - SNAKE_WIDTH * 2 ||
+			nextY < SNAKE_WIDTH * 2 || nextY >= _mapHeight - SNAKE_WIDTH * 2)
+			return;
+		
+		if (_isGrow) {
+			_isGrow = false;
+			_body.grow(this);
+		} else {
+			_body.move(this);
+		}
+		
+		_x = getNextX();
+		_y = getNextY();
+		
+		_head.setPosition(getPositionX(), getPositionY());
+	}
+	
+	public int getNextX() {
+		return SnakeDirection.addToX(_direction, _x);
+	}
+
+	public int getNextY() {
+		return SnakeDirection.addToY(_direction, _y);
+	}
+	
+	public float handleSceneTouch(TouchEvent pSceneTouchEvent) {
+		float dx = getPositionX() - pSceneTouchEvent.getX();
+		float dy = getPositionY() - pSceneTouchEvent.getY();
+		
+		float angle = (float)Math.atan2(dx, dy);
+		angle += Math.PI/2.0;
+		angle = (float)Math.toDegrees(angle);
+		
+		if (angle < 0) {
+	        angle += 360;
+	    }
+		if ((0 <= angle && angle <= 45) || (315 < angle && angle < 360)) {
+			setDirection(SnakeDirection.RIGHT);
+		} else if (45 < angle && angle <= 135) {
+			setDirection(SnakeDirection.UP);
+		} else if (135 < angle && angle <= 225) {
+			setDirection(SnakeDirection.LEFT);
+		} else if (225 < angle && angle <= 315) {
+			setDirection(SnakeDirection.DOWN);
+		}
+		return angle;
+	}
+}

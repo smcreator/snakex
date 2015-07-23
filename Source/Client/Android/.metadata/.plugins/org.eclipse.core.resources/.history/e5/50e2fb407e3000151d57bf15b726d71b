@@ -1,0 +1,72 @@
+package kz.snakelario.entities;
+
+import kz.snakelario.Vector2;
+
+public enum SnakeDirection {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN;
+	
+	public static Vector2 toVector(SnakeDirection pDirection) {
+		Vector2 result = new Vector2();
+		switch(pDirection) {
+			case UP:
+				result.y = 1;
+				break;
+			case DOWN:
+				result.y = -1;
+				break;
+			case LEFT:
+				result.x = -1;
+				break;
+			case RIGHT:
+				return pX + 1;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
+	
+	public static int addToX(final SnakeDirection pDirection, final int pX) {
+		switch(pDirection) {
+			case UP:
+			case DOWN:
+				return pX;
+			case LEFT:
+				return pX - 1;
+			case RIGHT:
+				return pX + 1;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
+
+	public static int addToY(final SnakeDirection pDirection, final int pY) {
+		switch(pDirection) {
+			case LEFT:
+			case RIGHT:
+				return pY;
+			case UP:
+				return pY - 1;
+			case DOWN:
+				return pY + 1;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
+
+	public static SnakeDirection opposite(final SnakeDirection pDirection) {
+		switch(pDirection) {
+			case UP:
+				return DOWN;
+			case DOWN:
+				return UP;
+			case LEFT:
+				return RIGHT;
+			case RIGHT:
+				return LEFT;
+			default:
+				return null;
+		}
+	}
+}

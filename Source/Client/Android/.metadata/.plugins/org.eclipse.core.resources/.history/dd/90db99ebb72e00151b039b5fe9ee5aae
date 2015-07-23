@@ -1,0 +1,41 @@
+package kz.snakelario;
+
+import org.andengine.engine.Engine;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.ui.activity.BaseGameActivity;
+
+import android.util.Log;
+
+public class Textures {
+	private BitmapTextureAtlas mTexture;
+	private ITextureRegion mIconTextureRegion, mBackgroundTextureRegion;
+	
+	private BitmapTextureAtlas mSnakeTexture;
+	private ITextureRegion mSnakeTextureRegion;
+	
+	public Textures(final BaseGameActivity activity, final Engine engine) {
+	    Log.i("Laser Logic", "onLoadResources");
+	    mTexture = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 512);
+	    mIconTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+	        mTexture, activity, "app_icon.png", 800, 0);
+	    mBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+	        mTexture, activity, "bg.png", 0, 0);
+	    
+	    mSnakeTexture = new BitmapTextureAtlas(activity.getTextureManager(), 128, 128);
+	    mSnakeTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mSnakeTexture, activity, "snake_body.png");
+	    
+	    mTexture.load();
+	  }
+	  
+	  public ITextureRegion getBackground(){
+	    return mBackgroundTextureRegion;
+	  }
+	  
+	  public ITextureRegion getLaserGun(){
+	    return mIconTextureRegion;
+	  }
+}

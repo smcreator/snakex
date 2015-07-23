@@ -1,0 +1,14 @@
+INDEX VERSION 1.127+C:\SVN\Snakelario\Source\Client\Android\.metadata\.plugins\org.eclipse.jdt.core
+2330055555.index
+2204757821.index
+3371415233.index
+2130953730.index
+2839624953.index
+2350354114.index
+2571894497.index
+1830124947.index
+1284074322.index
+1895151578.index
+1568184544.index
+2157853732.index
+3227006200.index

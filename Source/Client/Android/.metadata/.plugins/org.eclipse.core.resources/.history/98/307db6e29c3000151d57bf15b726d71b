@@ -1,0 +1,28 @@
+package kz.snakex.scenes;
+
+import kz.snakelario.Constants;
+import kz.snakelario.entities.Snake;
+
+import org.andengine.entity.Entity;
+import org.andengine.entity.scene.Scene;
+import org.andengine.extension.tmx.TMXTiledMap;
+
+public class Level1Scene extends Scene implements Constants {
+	private static final int NUMBER_OF_LAYERS = 3;
+	private int _mapWidth;
+	private int _mapHeight;
+	
+	private TMXTiledMap mTMXTiledMap;
+	private Snake mSnake;
+
+	
+	public Level1Scene() {
+		super();
+		
+		for(int i = 0; i < NUMBER_OF_LAYERS; i++) {
+	    	attachChild(new Entity());
+	    }
+		
+		
+	}
+}

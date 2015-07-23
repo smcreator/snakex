@@ -1,0 +1,34 @@
+package kz.snakelario;
+
+import org.andengine.engine.Engine;
+import org.andengine.opengl.texture.Texture;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
+import org.andengine.ui.activity.BaseGameActivity;
+
+import android.util.Log;
+
+public class Textures {
+	private Texture mTexture;
+	private TextureRegion mIconTextureRegion, mBackgroundTextureRegion;
+	
+	public Textures(final BaseGameActivity activity, final Engine engine) {
+	    Log.i("Laser Logic", "onLoadResources");
+	    this.mTexture = new Texture(1024, 512,
+	        TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+	    this.mIconTextureRegion = TextureRegionFactory.createFromAsset(
+	        this.mTexture, activity, "gfx/app_icon.png", 800, 0);
+	    this.mBackgroundTextureRegion = TextureRegionFactory.createFromAsset(
+	        this.mTexture, activity, "gfx/bg.png", 0, 0);
+	    engine.getTextureManager().loadTexture(this.mTexture);
+	  }
+	  
+	  public TextureRegion getBackground(){
+	    return mBackgroundTextureRegion;
+	  }
+	  
+	  public TextureRegion getLaserGun(){
+	    return mLaserGunTextureRegion;
+	  }
+}

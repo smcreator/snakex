@@ -1,0 +1,95 @@
+package kz.snakelario;
+
+import kz.snakex.scenes.Level1Scene;
+
+import org.andengine.engine.camera.BoundCamera;
+import org.andengine.engine.options.EngineOptions;
+import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.util.FPSLogger;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import android.util.DisplayMetrics;
+
+public class LevelActivity extends BaseGameActivity implements IOnSceneTouchListener, Constants {	
+	public static final float CAMERA_MAXIMUM_VELOCITY_X = 400f;
+	public static final float CAMERA_MAXIMUM_VELOCITY_Y = 400f;
+	public static final float CAMERA_ZOOM_FACTOR_CHANGE = 1f;		
+	
+	private GameState mState = GameState.NotStarted;
+	
+	private BoundCamera mCamera;
+	private Textures mTextures;
+	private Level1Scene mScene;
+		
+	@Override
+	public EngineOptions onCreateEngineOptions() {
+		//this.mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 
+		//	CAMERA_MAXIMUM_VELOCITY_X, CAMERA_MAXIMUM_VELOCITY_Y, CAMERA_ZOOM_FACTOR_CHANGE);
+		this.mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+	    return new EngineOptions(true,
+	        ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(
+	            getScreenResolutionRatio()), this.mCamera);
+	}
+
+	@Override
+	public void onCreateResources(
+			OnCreateResourcesCallback pOnCreateResourcesCallback)
+			throws Exception {		
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		mTextures = new Textures(this, getEngine());
+		pOnCreateResourcesCallback.onCreateResourcesFinished();
+	}
+	
+	@Override
+	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
+			throws Exception {
+		//Ln.i("OnLoadScene");
+	    //this.mEngine.registerUpdateHandler(new FPSLogger());
+	    this.mScene = new Level1Scene(getAssets(), mEngine, getVertexBufferObjectManager(), mCamera, mTextures);	    
+	    mScene.setOnSceneTouchListener(this);	    
+	    
+	    mScene.registerUpdateHandler(new TimerHandler(0.01f, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				if (mState == GameState.Running) {
+					mScene.nextFrame();
+				}
+			}	    	
+	    }));	    
+	    pOnCreateSceneCallback.onCreateSceneFinished(this.mScene);
+	}
+
+	@Override
+	public void onPopulateScene(Scene pScene,
+			OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+		mState = GameState.Running;
+		pOnPopulateSceneCallback.onPopulateSceneFinished();
+	}
+	
+	private float getScreenResolutionRatio() {
+	    DisplayMetrics dm = new DisplayMetrics();
+	    getWindowManager().getDefaultDisplay().getMetrics(dm);
+	    return ((float) dm.widthPixels) / ((float) dm.heightPixels);
+	}
+
+	@Override
+	public boolean onSceneTouchEvent(Scene pScene, final TouchEvent pSceneTouchEvent) {
+		if (pSceneTouchEvent.isActionDown()) {
+			this.runOnUiThread(new Runnable() {				
+				@Override
+				public void run() {
+					mScene.onTouch(pSceneTouchEvent);
+				}
+			});
+			
+            return true;
+        }
+        return false;
+	}
+}

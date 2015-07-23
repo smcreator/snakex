@@ -1,0 +1,19 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="android.content.Context"><rhs name\="kz.snakelario.StageActivity"/></lhs><lhs name\="java.lang.Enum"><rhs name\="kz.snakelario.GameState"/><rhs name\="kz.snakelario.entities.SnakeDirection"/></lhs><lhs name\="kz.snakelario.GameState"><rhs name\="kz.snakelario.GameState"/></lhs><lhs name\="kz.snakelario.entities.Snake"><rhs name\="kz.snakelario.entities.Snake"/></lhs><lhs name\="kz.snakelario.entities.SnakeDirection"><rhs name\="kz.snakelario.entities.SnakeDirection"/></lhs><lhs name\="org.andengine.entity.sprite.Sprite"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.shape.RectangularShape"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.shape.IAreaShape"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.shape.IShape"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.IEntity"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.scene.ITouchArea"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.engine.handler.IDrawHandler"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.engine.handler.IUpdateHandler"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.util.IDisposable"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.shape.Shape"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="org.andengine.entity.Entity"><rhs name\="kz.snakelario.entities.SnakeHead"/><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="kz.snakelario.entities.SnakeHead"><rhs name\="kz.snakelario.entities.SnakeHead"/></lhs><lhs name\="kz.snakelario.entities.SnakeBodyPart"><rhs name\="kz.snakelario.entities.SnakeBodyPart"/></lhs><lhs name\="kz.snakelario.entities.SnakeBody"><rhs name\="kz.snakelario.entities.SnakeBody"/></lhs><lhs name\="kz.snakelario.Vector2"><rhs name\="kz.snakelario.Vector2"/></lhs></history>
+content_assist_number_of_computers=13
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

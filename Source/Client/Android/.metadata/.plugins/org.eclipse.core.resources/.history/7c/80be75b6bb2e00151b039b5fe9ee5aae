@@ -1,0 +1,8 @@
+package kz.snakelario.entities;
+
+public enum SnakeDirection {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+}

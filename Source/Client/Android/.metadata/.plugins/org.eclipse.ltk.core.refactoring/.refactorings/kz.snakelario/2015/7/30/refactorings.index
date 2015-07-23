@@ -1,0 +1,17 @@
+1437380398572	Rename field 'mSnakeTexture'
+1437380405905	Rename field 'mEnitiesTexture'
+1437380423449	Rename field 'mSnakeTextureRegion'
+1437382727271	Rename method 'getSnakeBody'
+1437399948814	Delete element
+1437399950956	Delete element
+1437401588213	Delete element
+1437402288475	Rename type 'StageActivity'
+1437402303338	Delete element
+1437402305106	Delete element
+1437402311674	Delete element
+1437402313029	Delete element
+1437402314915	Delete element
+1437402317197	Delete element
+1437456497083	Rename field 'LAYER_BACKGROUND'
+1437571414108	Rename compilation unit 'Vector.java'
+1437578703163	Rename local variable 'isNextStage'

@@ -1,0 +1,9 @@
+package kz.snakelario;
+
+import org.andengine.opengl.texture.Texture;
+import org.andengine.opengl.texture.region.TextureRegion;
+
+public class Textures {
+	private Texture mTexture;
+	private TextureRegion mIconTextureRegion, mBackgroundTextureRegion;
+}

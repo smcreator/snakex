@@ -1,7 +1,9 @@
 package kz.snakex.scenes;
 
 import kz.snakelario.Constants;
+import kz.snakelario.GameManager;
 import kz.snakelario.Textures;
+import kz.snakelario.entities.EntityFactory;
 import kz.snakelario.entities.Snake;
 import kz.snakelario.entities.SnakeDirection;
 
@@ -33,6 +35,8 @@ public class Level1Scene extends Scene implements Constants {
 	private VertexBufferObjectManager _vertexBufferObjectManager;
 	private BoundCamera _camera;
 	private Textures _textures;
+	
+	private EntityFactory _factory;
 	private TMXTiledMap mTMXTiledMap;
 	private Snake mSnake;
 	
@@ -46,6 +50,10 @@ public class Level1Scene extends Scene implements Constants {
 		_camera = camera;
 		_textures = textures;
 		
+		_factory = new EntityFactory(_textures, _vertexBufferObjectManager);
+	}
+	
+	public void populate() {
 		for(int i = 0; i < NUMBER_OF_LAYERS; i++) {
 	    	attachChild(new Entity());
 	    }
@@ -77,9 +85,9 @@ public class Level1Scene extends Scene implements Constants {
 	    _camera.setBounds(0, 0, tmxLayer.getHeight(), tmxLayer.getWidth());
 	    _camera.setBoundsEnabled(true);
 	    
-	    mSnake = new Snake(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, SnakeDirection.RIGHT, _textures, _vertexBufferObjectManager);
+	    mSnake = _factory.createSnake(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, SnakeDirection.RIGHT);
 	    mSnake.setMap(_mapWidth, _mapHeight);
-	    getChildByIndex(LAYER_SNAKE).attachChild(mSnake);	    
+	    getChildByIndex(LAYER_SNAKE).attachChild(mSnake);    
 	    _camera.setChaseEntity(mSnake.getHead());
 	    
 	    replay();
@@ -96,6 +104,7 @@ public class Level1Scene extends Scene implements Constants {
 	}
 	
 	public void replay() {
+		GameManager.getInstance().resetGame();
 		mSnake.reset();
 		for (int i = 0; i < 20; i++)
 	    	mSnake.grow();

@@ -102,19 +102,14 @@ public class Snake extends Entity implements Constants {
 		_steps = 0;
 		_lastDirection = _direction;
 		_head.direction = _direction;
+		_head.rotate();
 	}
 	
 	public float handleSceneTouch(TouchEvent pSceneTouchEvent) {
-		float dx = getHead().getX() - pSceneTouchEvent.getX();
-		float dy = getHead().getY() - pSceneTouchEvent.getY();
+		Vector2 v = new Vector2(getHead().getX() - pSceneTouchEvent.getX(), 
+			getHead().getY() - pSceneTouchEvent.getY());
 		
-		float angle = (float)Math.atan2(dx, dy);
-		angle += Math.PI/2.0;
-		angle = (float)Math.toDegrees(angle);
-		
-		if (angle < 0) {
-	        angle += 360;
-	    }
+		float angle = v.getAngle();
 		if ((0 <= angle && angle <= 45) || (315 < angle && angle < 360)) {
 			setDirection(SnakeDirection.RIGHT);
 		} else if (45 < angle && angle <= 135) {

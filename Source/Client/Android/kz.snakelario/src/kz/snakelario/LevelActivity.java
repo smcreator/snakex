@@ -53,7 +53,6 @@ public class LevelActivity extends BaseGameActivity implements IOnSceneTouchList
 	    //this.mEngine.registerUpdateHandler(new FPSLogger());
 	    this.mScene = new Level1Scene(getAssets(), mEngine, getVertexBufferObjectManager(), mCamera, mTextures);	    
 	    mScene.setOnSceneTouchListener(this);	    
-	    
 	    mScene.registerUpdateHandler(new TimerHandler(0.01f, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
@@ -68,6 +67,8 @@ public class LevelActivity extends BaseGameActivity implements IOnSceneTouchList
 	@Override
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+		
+		mScene.populate();
 		mState = GameState.Running;
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}

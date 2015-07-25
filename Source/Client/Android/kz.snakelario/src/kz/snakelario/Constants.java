@@ -4,8 +4,9 @@ public interface Constants {
 	public static final int CELLS_HORIZONTAL = 100;
 	public static final int CELLS_VERTICAL = 100;
 	
-	public static final int SNAKE_WIDTH = 15;
+	public static final int SNAKE_WIDTH = 40;
 	public static final int SNAKE_HEIGHT = SNAKE_WIDTH;
+	public static final int SNAKE_SPRITE_WIDTH = 448;
 	
 	public static final int LAYER_TILE_MAP = 0;
 	public static final int LAYER_FOOD = 1;

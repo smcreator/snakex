@@ -4,7 +4,9 @@ import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 
@@ -12,19 +14,22 @@ import android.util.Log;
 
 public class Textures implements Constants {
 	private BitmapTextureAtlas mEntitiesTexture;
-	private ITextureRegion mSnakeHeadTextureRegion;
+	private ITiledTextureRegion mSnakeHeadTextureRegion;
 	private ITextureRegion mSnakeBodyTextureRegion;
 	
 	public Textures(final BaseGameActivity activity, final Engine engine) {
-	    mEntitiesTexture = new BitmapTextureAtlas(activity.getTextureManager(), 128, 128);
-	    mSnakeHeadTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mEntitiesTexture, activity, 
-		    "snake_head.png", 0, 0);
+	    mEntitiesTexture = new BitmapTextureAtlas(activity.getTextureManager(), 800, 500, 
+	    	BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+	    //mSnakeHeadTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mEntitiesTexture, activity, 
+		//    "snake_head.png", 0, 0);
+	    mSnakeHeadTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mEntitiesTexture, 
+			  activity, "snake_head.png", 0, 0, 4, 1);
 	    mSnakeBodyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mEntitiesTexture, activity, 
-	    	"snake_body.png", SNAKE_WIDTH + 1, 0);
+	    	"snake_body.png", SNAKE_SPRITE_WIDTH + 1, 0);
 	    mEntitiesTexture.load();
 	  }
 	  
-	  public ITextureRegion getSnakeHead() {
+	  public ITiledTextureRegion getSnakeHead() {
 		  return mSnakeHeadTextureRegion;
 	  }
 	  

@@ -1,0 +1,13 @@
+package kz.snakelario;
+
+public class GameManager {
+	private int _score;
+	
+	public GameManager() {
+		_score = 0;
+	}
+	
+	public int getScore() {
+		return _score;
+	}
+}

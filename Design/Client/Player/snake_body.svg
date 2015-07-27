@@ -101,9 +101,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="156.61503"
-     inkscape:cy="601.67226"
+     inkscape:zoom="8"
+     inkscape:cx="46.715862"
+     inkscape:cy="874.36509"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -151,11 +151,11 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#ff2a2a;fill-opacity:0.32667871"
+       style="fill:#ff2a2a;fill-opacity:0.32667918"
        id="path3371"
-       cx="371.42859"
-       cy="552.36218"
-       r="365.71426"
+       cx="20.845268"
+       cy="173.79672"
+       r="18.816488"
        inkscape:export-xdpi="25"
        inkscape:export-ydpi="25" />
     <circle
@@ -163,14 +163,15 @@
        cy="552.36218"
        cx="371.42859"
        id="circle3377"
-       style="fill:url(#radialGradient4185);fill-opacity:1;fill-rule:nonzero;opacity:0.952;filter:url(#filter4547)" />
+       style="opacity:0.95200004;fill:url(#radialGradient4185);fill-opacity:1;fill-rule:nonzero;filter:url(#filter4547)"
+       transform="matrix(0.05145134,0,0,0.05145134,1.7347717,145.37695)" />
     <circle
-       style="opacity:0.959;fill:url(#radialGradient4453);fill-opacity:1;fill-rule:nonzero;filter:url(#filter4523)"
+       style="opacity:0.95899999;fill:url(#radialGradient4453);fill-opacity:1;fill-rule:nonzero;filter:url(#filter4523)"
        id="path4443"
        cx="387.85715"
        cy="554.50507"
        r="82.14286"
-       transform="matrix(1.4293308,0,0,1.4293308,-161.51901,-227.35179)"
+       transform="matrix(0.07354097,0,0,0.07354097,-6.575597,133.6794)"
        inkscape:export-xdpi="25"
        inkscape:export-ydpi="25" />
   </g>

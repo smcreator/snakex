@@ -1,5 +1,0 @@
-package kz.snakelario.entities;
-
-public class SnakeHead extends Sprite {
-
-}
